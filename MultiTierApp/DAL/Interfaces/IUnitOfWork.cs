@@ -2,8 +2,8 @@
 {
     public interface IUnitOfWork
     {
-        IAddressRepository AddressRepository { get; }
-        ICustomerRepository CustomerRepository { get; }
+        IAddressRepository Addresses { get; }
+        ICustomerRepository Customers { get; }
 
         /// <summary>
         /// Commits all changes

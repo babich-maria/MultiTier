@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace DAL.Interfaces
 {
-    public interface IRepository<TEntity, TKey> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
         TEntity FindById(params object[] keys);
 
@@ -13,6 +13,6 @@ namespace DAL.Interfaces
       
         void Add(TEntity entity);
         void Update(TEntity entity);
-        void Delete(TKey id);
+        void Delete(TEntity keys);
     }
 }

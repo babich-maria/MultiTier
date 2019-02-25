@@ -2,7 +2,7 @@
 
 namespace DAL.Interfaces
 {
-    public interface ICustomerRepository : IRepository<Customer, CustomerKey>
+    public interface ICustomerRepository : IRepository<Customer>
     {
     }
 }

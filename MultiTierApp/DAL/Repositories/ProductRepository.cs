@@ -4,7 +4,7 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class AddressRepository : Repository<Address, object>, IAddressRepository
+    public class AddressRepository : Repository<Address>, IAddressRepository
     {       
         public AddressRepository(StoreContext context)
             : base(context)

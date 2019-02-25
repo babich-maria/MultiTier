@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace DAL.Repositories
 {
-    public abstract class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
+    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected DbSet<TEntity> _entities;
         protected DbContext _context;
@@ -43,19 +43,14 @@ namespace DAL.Repositories
             _entities.Add(entity);
         }
 
-        public virtual void Delete(TEntity entity)
-        {
-            _entities.Remove(entity);
-        }
-
         public void Update(TEntity entity)
         {
             _entities.Update(entity);
         }
 
-        public void Delete(TKey id)
+        public virtual void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            _entities.Remove(entity);
         }
     }
 }

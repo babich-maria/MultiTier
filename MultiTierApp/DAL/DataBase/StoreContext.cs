@@ -25,7 +25,15 @@ namespace DAL.DataBase
 
             modelBuilder.Entity<Address>()
             .HasKey(c => new { c.CustomerId, c.AddressTypeId });
-         
+
+            //     modelBuilder.Entity<Customer>()
+            //.OwnsMany(a => a.Addresses)
+
+            //.WillCascadeOnDelete(true);
+
+        //    modelBuilder.Entity<Customer>().HasMany(b => b.Addresses).WithOne(p => p.Customer)
+    //.OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Country>().HasData(
                new Country { CountryId = 20, Iso = "BY", Name = "Belarus" },
                new Country { CountryId = 80, Iso = "DE", Name = "Germany" },

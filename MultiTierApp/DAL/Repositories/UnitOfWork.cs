@@ -27,8 +27,8 @@ namespace DAL.Repositories
             _customerRepository = customerRepository;
         }
 
-        IAddressRepository IUnitOfWork.AddressRepository => _addressRepository;
-        ICustomerRepository IUnitOfWork.CustomerRepository => _customerRepository;
+        IAddressRepository IUnitOfWork.Addresses => _addressRepository;
+        ICustomerRepository IUnitOfWork.Customers => _customerRepository;
 
         public void Commit()
         {

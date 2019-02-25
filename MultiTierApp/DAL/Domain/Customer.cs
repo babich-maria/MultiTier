@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Domain
 {
@@ -22,5 +23,9 @@ namespace DAL.Domain
         [ForeignKey("CountryId")]
         public int CountryId { get; set; }
         public Country Country { get; set; }
+
+      
+        //public ICollection<Address> Addresses { get; } = new List<Address>();
+
     }
 }

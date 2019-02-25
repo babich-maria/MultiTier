@@ -2,7 +2,7 @@
 
 namespace DAL.Interfaces
 {
-    public interface IAddressRepository : IRepository<Address, object>
+    public interface IAddressRepository : IRepository<Address>
     {
     }
 }
