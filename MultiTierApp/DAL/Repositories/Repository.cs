@@ -1,9 +1,9 @@
-﻿using DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -25,12 +25,12 @@ namespace DAL.Repositories
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return _entities.ToList();
+            return _entities.ToArray();
         }
 
         public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _entities.Where(predicate);
+            return _entities.Where(predicate).ToArray();
         }
 
         public virtual int Count()

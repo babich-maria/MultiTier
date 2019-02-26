@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BL.Interfaces;
 using DAL.Domain;
 using DAL.Interfaces;
@@ -16,42 +17,42 @@ namespace BL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Customer GetCustomer(EntityKey key)
+        public Customer Get(EntityKey key)
         {
             var customer = _unitOfWork.Customers.FindById(key.Id, key.Name);
             return customer;
         }
 
-        public void AddCustomer(Customer customer)
+        public IEnumerable<Customer> GetAll()
+        {
+            return _unitOfWork.Customers.GetAll();
+        }
+
+        public void Add(Customer customer)
         {
             _unitOfWork.Customers.Add(customer);
             _unitOfWork.Commit();
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void Update(Customer customer)
         {
             _unitOfWork.Customers.Update(customer);
             _unitOfWork.Commit();
         }
 
-        public void DeleteCustomer(EntityKey key)
+        public void Delete(EntityKey key)
         {
             var customer = _unitOfWork.Customers.FindById(key.Id, key.Name);
             if (customer != null)
             {
                 _unitOfWork.Customers.Delete(customer);
+                var addresses = _unitOfWork.Addresses.Find(a => a.CustomerId.Equals(customer.CustomerId));
+                foreach (var address in addresses)
+                {
+                    _unitOfWork.Addresses.Delete(address);
+                }
             }
             _unitOfWork.Commit();
         }
-
-        //public void UpdateDeliveryAddress(EntityKey key, Address address)
-        //{
-        //    var customer = _unitOfWork.CustomerRepository.FindById(key.Id, key.Name);
-        //    if (customer == null)
-        //        return;
-
-        //    _unitOfWork.AddressRepository.Update(address);
-        //    _unitOfWork.Commit();
-        //}
     }
 }

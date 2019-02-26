@@ -1,12 +1,14 @@
-﻿using DAL.Domain;
+﻿using System.Collections.Generic;
+using DAL.Domain;
 
 namespace BL.Interfaces
 {
     public interface ICustomerService
     {
-        Customer GetCustomer(EntityKey key);
-        void AddCustomer(Customer customer);
-        void UpdateCustomer(Customer customer);
-        void DeleteCustomer(EntityKey key);
+        Customer Get(EntityKey key);
+        IEnumerable<Customer> GetAll();
+        void Add(Customer customer);
+        void Update(Customer customer);
+        void Delete(EntityKey key);
     }
 }

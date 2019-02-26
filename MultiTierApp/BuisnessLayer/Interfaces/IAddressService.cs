@@ -1,10 +1,14 @@
-﻿using DAL.Domain;
+﻿using System.Collections.Generic;
+using DAL.Domain;
 
 namespace BL.Interfaces
 {
     public interface IAddressService
     {
-        Address GetAddress(EntityKey key);
-        void AddAddress(Address address);
+        Address Get(EntityKey key);
+        IEnumerable<Address> GetAll();
+        void Add(Address customer);
+        void Update(Address customer);
+        void Delete(EntityKey key);
     }
 }

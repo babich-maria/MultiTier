@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BL.Interfaces;
 using DAL.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,16 @@ namespace MultiTierApp.Controllers
         [Route("GetCustomer")]
         public Customer GetCustomer([FromBody]EntityKey key)
         {
-            var customer = _customerService.GetCustomer(key);
-            
+            var customer = _customerService.Get(key);
             return customer;
+        }
+
+        // GET: api/<controller>/GetCustomer
+        [Route("GetAllCustomers")]
+        public IEnumerable<Customer> GetAllCustomer()
+        {
+            var customers = _customerService.GetAll();
+            return customers;
         }
 
         // POST api/<controller>
@@ -33,33 +41,22 @@ namespace MultiTierApp.Controllers
         [Route("AddCustomer")]
         public void AddCustomer([FromBody]Customer customer)
         {
-            _customerService.AddCustomer(customer);
+            _customerService.Add(customer);
         }
 
         [HttpPost]
         [Route("UpdateCustomer")]
         public void UpdateCustomer([FromBody]Customer customer)
         {
-            _customerService.UpdateCustomer(customer);
+            _customerService.Update(customer);
         }
 
         [HttpPost]
         [Route("DeleteCustomer")]
         public void DeleteCustomer([FromBody]EntityKey key)
         {
-            _customerService.DeleteCustomer(key);
+            _customerService.Delete(key);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
