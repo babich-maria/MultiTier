@@ -22,7 +22,7 @@ namespace Tests
             {  new Customer { CustomerId = "1", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 20 },
                 new Customer { CustomerId = "2", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 20 }};
             //mock repository and test service
-            Mock<CustomerRepository> mockCustomerRepository = new Mock<CustomerRepository>();
+            Mock<ICustomerRepository> mockCustomerRepository = new Mock<ICustomerRepository>();
             mockCustomerRepository.Setup(m => m.GetAll()).Returns(customers);
 
             Mock<IUnitOfWork> mockUniOfWork = new Mock<IUnitOfWork>();
