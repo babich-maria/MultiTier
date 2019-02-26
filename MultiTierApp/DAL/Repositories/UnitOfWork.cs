@@ -8,9 +8,8 @@ namespace DAL.Repositories
     {
         private readonly StoreContext _dbContext;
        
-       public IAddressRepository _addressRepository;
-       public ICustomerRepository _customerRepository;
-       
+        private IAddressRepository _addressRepository;
+        private ICustomerRepository _customerRepository;
        
         public UnitOfWork(StoreContext dbContext, IAddressRepository addressRepository, 
             ICustomerRepository customerRepository)
@@ -34,6 +33,5 @@ namespace DAL.Repositories
         {
             _dbContext.SaveChanges();
         }
-       
     }
 }
