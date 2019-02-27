@@ -40,16 +40,9 @@ namespace BL.Services
 
         public void Delete(AddressKey key)
         {
-            //var customer = _unitOfWork.Customers.FindById(key.Id, key.Name);
-            //if (customer != null)
-            //{
-            //    _unitOfWork.Customers.Delete(customer);
-            //    var addresses = _unitOfWork.Addresses.Find(a => a.CustomerId.Equals(customer.CustomerId));
-            //    foreach (var address in addresses)
-            //    {
-            //        _unitOfWork.Addresses.Delete(address);
-            //    }
-            //}
+            var address = _unitOfWork.Addresses.FindById(key.Id, key.Type);
+            _unitOfWork.Addresses.Delete(address);
+           
             _unitOfWork.Commit();
         }
     }

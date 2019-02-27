@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BL.Services;
 using DAL.Domain;
 using DAL.Interfaces;
@@ -11,6 +12,9 @@ namespace UnitTests
     {
         private List<Customer> customers;
         private CustomerService customerService;
+        private Mock<IUnitOfWork> mockUniOfWork;
+        private Mock<ICustomerRepository> mockCustomerRepository;
+
         [SetUp]
         public void Setup()
         {
@@ -20,10 +24,13 @@ namespace UnitTests
                 new Customer { CustomerId = "1", Name = "Ola", Street = "Jasna", ZIP = "67605", City = "Wroclaw", CountryId = 171 },
                 new Customer { CustomerId = "3", Name = "Ola", Street = "Czysta", ZIP = "24777", City = "Katovice", CountryId = 171 } };
             
-            Mock<ICustomerRepository> mockCustomerRepository = new Mock<ICustomerRepository>();
+            mockCustomerRepository = new Mock<ICustomerRepository>();
             mockCustomerRepository.Setup(m => m.GetAll()).Returns(customers);
+           
+            //mockCustomerRepository.Setup(m => m.Find()).Returns(customers);
+            //mockCustomerRepository.Setup(m => m.Delete()).Returns(customers);
 
-            Mock<IUnitOfWork> mockUniOfWork = new Mock<IUnitOfWork>();
+            mockUniOfWork = new Mock<IUnitOfWork>();
             mockUniOfWork.Setup(m => m.Customers).Returns(mockCustomerRepository.Object);
 
             customerService = new CustomerService(mockUniOfWork.Object);
@@ -32,64 +39,87 @@ namespace UnitTests
         [Test]
         public void GetAllCustomers()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
+            var result = (IList<Customer>)customerService.GetAll();
             Assert.That(result.Count,  Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void GetCustomerWhenExistReturnCustomer()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
+            Customer customer = customers[0];
+            CustomerKey key = new CustomerKey() { Id = customer.CustomerId, Name = customer.Name };
+            mockCustomerRepository.Setup(m => m.FindById(key.Id, key.Name)).Returns(customer);
+
+            Customer result = customerService.Get(key);
+
+            Assert.That(result, Is.EqualTo(customer));
         }
 
         [Test]
         public void GetCustomerWhenNonExistReturnNull()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void AddCustomerWhenNewReturnNoException()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void AddCustomerWhenExistReturnException()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void UpdateCustomerWhenNonExistReturnException()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void UpdateCustomerWhenExistReturnNoException()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void DeleteCustomerWhenNonExistReturnException()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
         }
 
         [Test]
         public void DeleteCustomerWhenExistReturnNoExceptionDeleteLinkedAddresses()
         {
-            IList<Customer> result = (IList<Customer>)customerService.GetAll();
-            Assert.That(result.Count, Is.EqualTo(customers.Count));
+            //SETUP
+            var addresses = new List<Address>
+            {  new Address { CustomerId = "1", AddressTypeId = 1, Name = "Alex", Street = "Zielona", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "1", AddressTypeId = 2, Name = "Alex", Street = "Czerwona", ZIP = "24601", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "3", AddressTypeId = 3, Name = "Ola", Street = "Pomaranczowa", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "2", AddressTypeId = 2, Name = "Alex", Street = "Szara", ZIP = "24601", City = "Wroclaw", CountryId = 171 } };
+
+            Mock<IAddressRepository> mockAddressRepository = new Mock<IAddressRepository>();
+            mockAddressRepository.Setup(m => m.GetAll()).Returns(addresses);
+
+            //IQueryable myFilteredFoos = null;
+            //Address addressKeyForDelete = new Ad
+            //mockAddressRepository.Setup(r => r.Delete(It.IsAny<Address>()))
+            //     .Callback((Address address) =>        myFilteredFoos = addresses.Where())
+            //        .Returns(() => myFilteredFoos.Cast<IFooBar>());
+
+            mockUniOfWork.Setup(m => m.Addresses).Returns(mockAddressRepository.Object);
+
+            customerService = new CustomerService(mockUniOfWork.Object);
+            var addressService = new AddressService(mockUniOfWork.Object);
+
+            var customerKey = new CustomerKey() { Id = "1", Name = "Alex" };
+
+            //ACT
+            customerService.Delete(customerKey);
+
+            //ASSERT
+            var resultCustomer = customerService.Get(customerKey);
+            var resultAddress = addressService.GetAll().Where(a => a.CustomerId == customerKey.Id);
+
+           Assert.That(resultCustomer, Is.EqualTo(null));
+           // mockAddressRepository.Verify(r => r.Delete(It.IsAny<Address>()));
         }
     }
 }
