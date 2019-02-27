@@ -1,2 +1,3 @@
-Application was created using Asp Core, local DB, Entity Framework.
+Application was created using Asp Core, local DB, Entity Framework, Migrations.
 Postman was used for conntroller testing.
+To create DataBase type in Package Console Manager: Update-Database
