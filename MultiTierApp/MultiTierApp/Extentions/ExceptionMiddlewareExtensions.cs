@@ -30,7 +30,7 @@ namespace WebApp.Extentions
                     {
                         problemDetails.Title = "An unexpected error occurred!";
                         problemDetails.Status = 500;
-                        problemDetails.Detail = exception.InnerException.ToString();
+                        problemDetails.Detail = exception.InnerException?.ToString();
                     }
 
                     context.Response.StatusCode = problemDetails.Status.Value;

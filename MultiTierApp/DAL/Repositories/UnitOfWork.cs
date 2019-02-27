@@ -14,16 +14,9 @@ namespace DAL.Repositories
         public UnitOfWork(StoreContext dbContext, IAddressRepository addressRepository, 
             ICustomerRepository customerRepository)
         {
-            if (dbContext == null)
-                throw new NullReferenceException("dbContext could not be bull");
-            if (addressRepository == null)
-                throw new NullReferenceException("addressRepository could not be bull");
-            if (customerRepository == null)
-                throw new NullReferenceException("customerRepository could not be bull");
-
-            _dbContext = dbContext;
-            _addressRepository = addressRepository;
-            _customerRepository = customerRepository;
+            _dbContext = dbContext ?? throw new NullReferenceException("dbContext could not be bull");
+            _addressRepository = addressRepository ?? throw new NullReferenceException("addressRepository could not be bull");
+            _customerRepository = customerRepository ?? throw new NullReferenceException("customerRepository could not be bull");
         }
 
         IAddressRepository IUnitOfWork.Addresses => _addressRepository;

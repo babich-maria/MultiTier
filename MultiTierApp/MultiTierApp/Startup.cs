@@ -1,6 +1,7 @@
 ﻿using BL.Interfaces;
 using BL.Services;
 using DAL.DataBase;
+using DAL.Domain;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -55,7 +56,7 @@ namespace MultiTierApp
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IService<Customer, CustomerKey>, CustomerService>();
            // services.AddTransient<IAddressService, AddressService>();
         }
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MultiTierApp.Migrations
+namespace WebApp.Migrations
 {
     [DbContext(typeof(StoreContext))]
     partial class StoreContextModelSnapshot : ModelSnapshot
@@ -55,9 +55,9 @@ namespace MultiTierApp.Migrations
                             CustomerId = "1",
                             AddressTypeId = 1,
                             City = "Wroclaw",
-                            CountryId = 20,
+                            CountryId = 171,
                             Name = "Alex",
-                            Street = "Gaja",
+                            Street = "Zielona",
                             ZIP = "24605"
                         },
                         new
@@ -65,9 +65,29 @@ namespace MultiTierApp.Migrations
                             CustomerId = "1",
                             AddressTypeId = 2,
                             City = "Wroclaw",
-                            CountryId = 20,
+                            CountryId = 171,
                             Name = "Alex",
-                            Street = "Zelazna",
+                            Street = "Czerwona",
+                            ZIP = "24601"
+                        },
+                        new
+                        {
+                            CustomerId = "3",
+                            AddressTypeId = 3,
+                            City = "Wroclaw",
+                            CountryId = 171,
+                            Name = "Ola",
+                            Street = "Pomaranczowa",
+                            ZIP = "24605"
+                        },
+                        new
+                        {
+                            CustomerId = "2",
+                            AddressTypeId = 2,
+                            City = "Wroclaw",
+                            CountryId = 171,
+                            Name = "Alex",
+                            Street = "Szara",
                             ZIP = "24601"
                         });
                 });
@@ -189,7 +209,7 @@ namespace MultiTierApp.Migrations
                             CustomerId = "1",
                             Name = "Alex",
                             City = "Wroclaw",
-                            CountryId = 20,
+                            CountryId = 171,
                             Street = "Gaja",
                             ZIP = "24605"
                         },
@@ -197,10 +217,28 @@ namespace MultiTierApp.Migrations
                         {
                             CustomerId = "2",
                             Name = "Alex",
-                            City = "Wroclaw",
+                            City = "Grodno",
                             CountryId = 20,
-                            Street = "Gaja",
-                            ZIP = "24605"
+                            Street = "Swieta",
+                            ZIP = "35605"
+                        },
+                        new
+                        {
+                            CustomerId = "1",
+                            Name = "Ola",
+                            City = "Wroclaw",
+                            CountryId = 171,
+                            Street = "Jasna",
+                            ZIP = "67605"
+                        },
+                        new
+                        {
+                            CustomerId = "3",
+                            Name = "Ola",
+                            City = "Katovice",
+                            CountryId = 171,
+                            Street = "Czysta",
+                            ZIP = "24777"
                         });
                 });
 
@@ -217,9 +255,8 @@ namespace MultiTierApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Domain.Customer", "Customer")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CustomerId", "Name")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CustomerId", "Name");
                 });
 
             modelBuilder.Entity("DAL.Domain.Customer", b =>

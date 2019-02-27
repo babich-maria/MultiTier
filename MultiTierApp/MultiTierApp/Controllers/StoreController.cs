@@ -6,29 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MultiTierApp.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private ICustomerService _customerService;
-        public StoreController(ICustomerService customerService)
+        private IService<Customer, CustomerKey> _customerService;
+        private IService<Address, AddressKey> _addressService;
+
+        public StoreController(IService<Customer, CustomerKey> customerService, IService<Address, AddressKey> addressService)
         {
-            if (customerService == null)
-                throw new NullReferenceException("customerService could not be bull");
-
-            _customerService = customerService;
+            _customerService = customerService ?? throw new NullReferenceException("CustomerService could not be bull");
+            _addressService = addressService ?? throw new NullReferenceException("AddressService could not be bull");
         }
-
-        // GET: api/<controller>/GetCustomer
+     
         [Route("GetCustomer")]
-        public Customer GetCustomer([FromBody]EntityKey key)
+        public Customer GetCustomer([FromBody]CustomerKey key)
         {
             var customer = _customerService.Get(key);
             return customer;
         }
-
-        // GET: api/<controller>/GetCustomer
+        
         [Route("GetAllCustomers")]
         public IEnumerable<Customer> GetAllCustomer()
         {
@@ -36,7 +33,6 @@ namespace MultiTierApp.Controllers
             return customers;
         }
 
-        // POST api/<controller>
         [HttpPost]
         [Route("AddCustomer")]
         public void AddCustomer([FromBody]Customer customer)
@@ -53,10 +49,44 @@ namespace MultiTierApp.Controllers
 
         [HttpPost]
         [Route("DeleteCustomer")]
-        public void DeleteCustomer([FromBody]EntityKey key)
+        public void DeleteCustomer([FromBody]CustomerKey key)
         {
             _customerService.Delete(key);
         }
 
+        [Route("GetAddress")]
+        public Address GetAddress([FromBody]AddressKey key)
+        {
+            var address = _addressService.Get(key);
+            return address;
+        }
+     
+        [Route("GetAllAddresses")]
+        public IEnumerable<Address> GetAllAddressAddress()
+        {
+            var addresses = _addressService.GetAll();
+            return addresses;
+        }
+      
+        [HttpPost]
+        [Route("AddAddress")]
+        public void AddCustomer([FromBody]Address address)
+        {
+            _addressService.Add(address);
+        }
+
+        [HttpPost]
+        [Route("UpdateAddress")]
+        public void UpdateAddress([FromBody]Address address)
+        {
+            _addressService.Update(address);
+        }
+
+        [HttpPost]
+        [Route("DeleteAddress")]
+        public void DeleteAddress([FromBody]AddressKey key)
+        {
+            _addressService.Delete(key);
+        }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MultiTierApp.Migrations
+namespace WebApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace MultiTierApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "Country",
                 columns: table => new
                 {
                     CountryId = table.Column<int>(nullable: false)
@@ -35,7 +35,7 @@ namespace MultiTierApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.CountryId);
+                    table.PrimaryKey("PK_Country", x => x.CountryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,9 +53,9 @@ namespace MultiTierApp.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => new { x.CustomerId, x.Name });
                     table.ForeignKey(
-                        name: "FK_Customers_Countries_CountryId",
+                        name: "FK_Customers_Country_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countries",
+                        principalTable: "Country",
                         principalColumn: "CountryId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -82,9 +82,9 @@ namespace MultiTierApp.Migrations
                         principalColumn: "AddressTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Adresses_Countries_CountryId",
+                        name: "FK_Adresses_Country_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countries",
+                        principalTable: "Country",
                         principalColumn: "CountryId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -106,7 +106,7 @@ namespace MultiTierApp.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Countries",
+                table: "Country",
                 columns: new[] { "CountryId", "Iso", "Iso3", "Name", "NumCode", "PhoneCode" },
                 values: new object[,]
                 {
@@ -118,22 +118,24 @@ namespace MultiTierApp.Migrations
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "CustomerId", "Name", "City", "CountryId", "Street", "ZIP" },
-                values: new object[] { "1", "Alex", "Wroclaw", 20, "Gaja", "24605" });
-
-            migrationBuilder.InsertData(
-                table: "Customers",
-                columns: new[] { "CustomerId", "Name", "City", "CountryId", "Street", "ZIP" },
-                values: new object[] { "2", "Alex", "Wroclaw", 20, "Gaja", "24605" });
-
-            migrationBuilder.InsertData(
-                table: "Adresses",
-                columns: new[] { "CustomerId", "AddressTypeId", "City", "CountryId", "Name", "Street", "ZIP" },
-                values: new object[] { "1", 1, "Wroclaw", 20, "Alex", "Gaja", "24605" });
+                values: new object[,]
+                {
+                    { "2", "Alex", "Grodno", 20, "Swieta", "35605" },
+                    { "1", "Alex", "Wroclaw", 171, "Gaja", "24605" },
+                    { "1", "Ola", "Wroclaw", 171, "Jasna", "67605" },
+                    { "3", "Ola", "Katovice", 171, "Czysta", "24777" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Adresses",
                 columns: new[] { "CustomerId", "AddressTypeId", "City", "CountryId", "Name", "Street", "ZIP" },
-                values: new object[] { "1", 2, "Wroclaw", 20, "Alex", "Zelazna", "24601" });
+                values: new object[,]
+                {
+                    { "2", 2, "Wroclaw", 171, "Alex", "Szara", "24601" },
+                    { "1", 1, "Wroclaw", 171, "Alex", "Zielona", "24605" },
+                    { "1", 2, "Wroclaw", 171, "Alex", "Czerwona", "24601" },
+                    { "3", 3, "Wroclaw", 171, "Ola", "Pomaranczowa", "24605" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Adresses_AddressTypeId",
@@ -151,8 +153,8 @@ namespace MultiTierApp.Migrations
                 columns: new[] { "CustomerId", "Name" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_Iso",
-                table: "Countries",
+                name: "IX_Country_Iso",
+                table: "Country",
                 column: "Iso",
                 unique: true);
 
@@ -174,7 +176,7 @@ namespace MultiTierApp.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "Country");
         }
     }
 }

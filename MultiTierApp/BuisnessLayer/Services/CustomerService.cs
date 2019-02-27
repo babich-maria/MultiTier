@@ -6,18 +6,16 @@ using DAL.Interfaces;
 
 namespace BL.Services
 {
-    public class CustomerService : ICustomerService
+    public class CustomerService : IService<Customer, CustomerKey> 
     {
         private readonly IUnitOfWork _unitOfWork;
 
         public CustomerService(IUnitOfWork unitOfWork)
         {
-            if (unitOfWork == null)
-                throw new NullReferenceException("unitOfWork could not be bull");
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork ?? throw new NullReferenceException("UnitOfWork could not be bull");
         }
 
-        public Customer Get(EntityKey key)
+        public Customer Get(CustomerKey key)
         {
             var customer = _unitOfWork.Customers.FindById(key.Id, key.Name);
             return customer;
@@ -40,7 +38,7 @@ namespace BL.Services
             _unitOfWork.Commit();
         }
 
-        public void Delete(EntityKey key)
+        public void Delete(CustomerKey key)
         {
             var customer = _unitOfWork.Customers.FindById(key.Id, key.Name);
             if (customer != null)

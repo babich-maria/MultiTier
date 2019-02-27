@@ -1,6 +1,6 @@
 ﻿namespace DAL.Domain
 {
-    public struct EntityKey
+    public struct CustomerKey
     {
         public string Id;
         public string Name;

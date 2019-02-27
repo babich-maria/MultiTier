@@ -26,33 +26,27 @@ namespace DAL.DataBase
             modelBuilder.Entity<Address>()
             .HasKey(c => new { c.CustomerId, c.AddressTypeId });
 
-            //     modelBuilder.Entity<Customer>()
-            //.OwnsMany(a => a.Addresses)
-
-            //.WillCascadeOnDelete(true);
-
-        //    modelBuilder.Entity<Customer>().HasMany(b => b.Addresses).WithOne(p => p.Customer)
-    //.OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<Country>().HasData(
                new Country { CountryId = 20, Iso = "BY", Name = "Belarus" },
                new Country { CountryId = 80, Iso = "DE", Name = "Germany" },
                new Country { CountryId = 171, Iso = "PL", Name = "Poland" });
-
 
             modelBuilder.Entity<AddressType>().HasData(
                 new AddressType { AddressTypeId = 1, Code = "I", Description = "invoice address" },
                 new AddressType { AddressTypeId = 2, Code = "D", Description = "delivery address" },
                 new AddressType { AddressTypeId = 3, Code = "S", Description = "service address" });
 
-
             modelBuilder.Entity<Customer>().HasData(
-                new Customer { CustomerId = "1", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 20 },
-                new Customer { CustomerId = "2", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 20 });
+                new Customer { CustomerId = "1", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
+                new Customer { CustomerId = "2", Name = "Alex", Street = "Swieta", ZIP = "35605", City = "Grodno", CountryId = 20 },
+                new Customer { CustomerId = "1", Name = "Ola", Street = "Jasna", ZIP = "67605", City = "Wroclaw", CountryId = 171 },
+                new Customer { CustomerId = "3", Name = "Ola", Street = "Czysta", ZIP = "24777", City = "Katovice", CountryId = 171 });
 
             modelBuilder.Entity<Address>().HasData(
-                new Address { CustomerId = "1", AddressTypeId = 1, Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 20 },
-                new Address { CustomerId = "1", AddressTypeId = 2, Name = "Alex", Street = "Zelazna", ZIP = "24601", City = "Wroclaw", CountryId = 20 });
+                new Address { CustomerId = "1", AddressTypeId = 1, Name = "Alex", Street = "Zielona", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "1", AddressTypeId = 2, Name = "Alex", Street = "Czerwona", ZIP = "24601", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "3", AddressTypeId = 3, Name = "Ola", Street = "Pomaranczowa", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
+                new Address { CustomerId = "2", AddressTypeId = 2, Name = "Alex", Street = "Szara", ZIP = "24601", City = "Wroclaw", CountryId = 171 });
 
         }
     }
