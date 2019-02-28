@@ -3,6 +3,6 @@
     public struct AddressKey
     {
         public string Id;
-        public string Type;
+        public int TypeId;
     }
 }

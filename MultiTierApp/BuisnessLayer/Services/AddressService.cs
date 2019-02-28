@@ -17,7 +17,7 @@ namespace BL.Services
 
         public Address Get(AddressKey key)
         {
-            var address = _unitOfWork.Addresses.FindById(key.Id, key.Type);
+            var address = _unitOfWork.Addresses.FindById(key.Id, key.TypeId);
             return address;
         }
 
@@ -40,7 +40,7 @@ namespace BL.Services
 
         public void Delete(AddressKey key)
         {
-            var address = _unitOfWork.Addresses.FindById(key.Id, key.Type);
+            var address = _unitOfWork.Addresses.FindById(key.Id, key.TypeId);
             _unitOfWork.Addresses.Delete(address);
            
             _unitOfWork.Commit();

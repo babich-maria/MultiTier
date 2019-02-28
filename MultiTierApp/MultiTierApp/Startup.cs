@@ -57,7 +57,7 @@ namespace MultiTierApp
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IService<Customer, CustomerKey>, CustomerService>();
-           // services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IService<Address, AddressKey>, AddressService>();
         }
     }
 }
