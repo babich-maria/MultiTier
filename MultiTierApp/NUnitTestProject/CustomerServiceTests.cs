@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using BL.Services;
 using DAL.Domain;
@@ -10,22 +8,6 @@ using NUnit.Framework;
 
 namespace UnitTests
 {
-    class Box
-    {
-        static Box()
-        {
-            Debug.WriteLine("static ctor was called");
-        }
-
-        public Box()
-        {
-            Debug.WriteLine("default ctor was calleds");
-        }
-
-        public static string Data { get { return "You are trying to get data"; } }
-
-        public const int Foo = 7;
-    }
     public class CustomerServiceTests
     {
         private List<Customer> customers;
@@ -36,9 +18,6 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            var data = Box.Data;
-            var box = new Box();
-
             customers = new List<Customer>
             {  new Customer { CustomerId = "1", Name = "Alex", Street = "Gaja", ZIP = "24605", City = "Wroclaw", CountryId = 171 },
                 new Customer { CustomerId = "2", Name = "Alex", Street = "Swieta", ZIP = "35605", City = "Grodno", CountryId = 20 },
